@@ -6,6 +6,7 @@ setuptools.setup(
     extras_require={
         'jira': ['atlassian-python-api',],
         'dev': ['ipython', 'ipdb',],
+        'nbviz': ['jupyter', 'matplotlib',],
     },
     entry_points={
         'console_scripts': [

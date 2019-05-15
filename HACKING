@@ -1,1 +1,1 @@
-$ pip install -e .[jira,dev]
+$ pip install -e .[jira,dev,nbviz]

@@ -6,6 +6,8 @@ import os
 
 from atlassian import jira
 
+import sprintl
+
 
 def get_issue(j, key):
     return j.get('rest/api/2/issue/{0}?expand=changelog'.format(key))
@@ -20,11 +22,11 @@ def extract(url, username, password, sprint, output_dir):
     issues_jql = j.jql('Sprint = {0}'.format(sprint))
     assert issues_jql
     os.makedirs(output_dir, exist_ok=True)
-    with open(os.path.join(output_dir, 'issues.csv'), 'w') as issues_file:
-        with open(os.path.join(output_dir, 'issue_states.csv'), 'w') as issue_states_file:
-            issues_csv = csv.DictWriter(issues_file, ['id', 'summary', 'type'])
+    with open(os.path.join(output_dir, sprintl.ISSUES_FILE), 'w') as issues_file:
+        with open(os.path.join(output_dir, sprintl.ISSUE_STATES_FILE), 'w') as issue_states_file:
+            issues_csv = csv.DictWriter(issues_file, sprintl.ISSUES_COLUMNS)
             issues_csv.writeheader()
-            issue_states_csv = csv.DictWriter(issue_states_file, ['issue', 'state', 'from', 'to'])
+            issue_states_csv = csv.DictWriter(issue_states_file, sprintl.ISSUE_STATES_COLUMNS)
             issue_states_csv.writeheader()
             for issue in issues_jql['issues']:
                 key = issue['key']
